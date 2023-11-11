@@ -56,8 +56,8 @@ namespace ToDoService.Controllers
             return CreatedAtAction(nameof(Get), new { id = toDoItem.Id }, toDoItem);
         }
 
-        [HttpPut]
-        public ToDoItem Update(ToDoItem todoItem)
+        [HttpPut("{id}")]
+        public ToDoItem Update(long id,ToDoItem todoItem)
         {
             CheckAndThrowException();
             var foundToDoItem = toDoItems.FirstOrDefault(item => item.Id == todoItem.Id);
@@ -71,8 +71,8 @@ namespace ToDoService.Controllers
             return foundToDoItem;
         }
 
-        [HttpDelete]
-        public ToDoItem Delete(long id)
+        [HttpDelete("{id}")]
+        public ActionResult Delete(long id)
         {
             CheckAndThrowException();
             var foundToDoItem = toDoItems.FirstOrDefault(todoItem => todoItem.Id == id);
@@ -82,7 +82,7 @@ namespace ToDoService.Controllers
                 toDoItems.Remove(foundToDoItem);
             }
 
-            return foundToDoItem;
+            return NoContent();
         }
 
         private void CheckAndThrowException()
